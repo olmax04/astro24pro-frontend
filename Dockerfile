@@ -34,17 +34,21 @@ RUN groupadd -r -g 1001 nodejs && \
 RUN mkdir .next
 RUN chown nextjs:nodejs .next
 
-# --- [1] Миграции ---
-COPY --from=builder --chown=nextjs:nodejs /app/src/migrations ./src/migrations
-
-# --- [2] Node modules (для работы CLI) ---
+# --- [1] Node modules (для работы CLI и зависимостей) ---
 COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
 
-# --- [3] ИСПРАВЛЕНИЕ: Копируем tsconfig.json ---
-# Payload CLI требует этот файл для понимания путей, даже в продакшене
+# --- [2] TS Config (чтобы CLI понимал пути) ---
 COPY --from=builder --chown=nextjs:nodejs /app/tsconfig.json ./tsconfig.json
 
-# Копируем standalone сборку
+# --- [3] Миграции (файлы SQL/TS) ---
+COPY --from=builder --chown=nextjs:nodejs /app/src/migrations ./src/migrations
+
+# --- [4] ИСПРАВЛЕНИЕ: Копируем весь SRC ---
+# Payload CLI требует доступа к src/payload.config.ts и вашим коллекциям,
+# чтобы сгенерировать схему базы данных.
+COPY --from=builder --chown=nextjs:nodejs /app/src ./src
+
+# Копируем standalone сборку Next.js
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
