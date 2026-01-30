@@ -35,16 +35,19 @@ RUN mkdir .next
 RUN chown nextjs:nodejs .next
 
 # --- [1] ВАЖНО: Копируем папку с миграциями ---
-# Без этой строки команда 'npm run migrate' не найдет файлы миграций
 COPY --from=builder --chown=nextjs:nodejs /app/src/migrations ./src/migrations
 
-# Automatically leverage output traces to reduce image size
+# --- [2] ИСПРАВЛЕНИЕ ОШИБКИ PAYLOAD NOT FOUND ---
+# Standalone сборка удаляет CLI утилиты. Мы копируем полные node_modules,
+# чтобы команда 'payload' (и 'npm run migrate') работала.
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
+
+# Копируем standalone сборку (она перезапишет некоторые файлы, это нормально)
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# --- [2] ВАЖНО: Копируем package.json, чтобы работали npm скрипты ---
+# Копируем package.json
 COPY --from=builder --chown=nextjs:nodejs /app/package.json ./
-# Lock-файл не обязателен для запуска (run), но полезен для версий
 COPY --from=builder --chown=nextjs:nodejs /app/package-lock.json ./
 
 USER nextjs
@@ -54,8 +57,5 @@ EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-# --- [3] ВАЖНО: Команда запуска с миграциями ---
-# sh -c позволяет выполнить цепочку команд (&&)
-# Сначала 'npm run migrate' применяет изменения к базе
-# Если успешно (&&) -> запускается 'node server.js'
+# --- [3] Команда запуска ---
 CMD ["sh", "-c", "npm run migrate && node server.js"]
