@@ -1,19 +1,17 @@
 # To use this Dockerfile, you have to set `output: 'standalone'` in your next.config.mjs file.
-# From https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile
 
-FROM node:20-slim AS base
+FROM node:23-slim AS base
 
 # Install dependencies only when needed
 FROM base AS deps
+# В Debian (slim) уже есть glibc, поэтому libc6-compat не нужен.
+# Если вам понадобятся системные пакеты (например, для ssl), используйте apt-get:
+# RUN apt-get update && apt-get install -y openssl
 WORKDIR /app
 
-# Update npm to latest version to avoid warnings
-RUN npm install -g npm@latest
-
 # Install dependencies based on the preferred package manager
-COPY package.json  package-lock.json ./
+COPY package.json package-lock.json ./
 RUN npm install
-
 
 # Rebuild the source code only when needed
 FROM base AS builder
@@ -21,10 +19,7 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Next.js collects completely anonymous telemetry data about general usage.
-# Learn more here: https://nextjs.org/telemetry
-# Uncomment the following line in case you want to disable telemetry during the build.
-# ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN npm run build
 
@@ -32,23 +27,21 @@ RUN npm run build
 FROM base AS runner
 WORKDIR /app
 
-ENV NODE_ENV production
-# Uncomment the following line in case you want to disable telemetry during runtime.
-# ENV NEXT_TELEMETRY_DISABLED 1
+ENV NODE_ENV=production
 
-# Create user and group (using standard Linux commands for Debian-based image)
+# --- ИСПРАВЛЕНИЕ: Для Debian (slim) используем стандартные groupadd / useradd ---
+# (Те команды, что были в самом начале, до Alpine)
 RUN groupadd -r -g 1001 nodejs && \
     useradd -r -u 1001 -g nodejs nextjs
 
 # Remove this line if you do not have this folder
-COPY --from=builder /app/public ./public
+#COPY --from=builder /app/public ./public
 
 # Set the correct permission for prerender cache
 RUN mkdir .next
 RUN chown nextjs:nodejs .next
 
 # Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
@@ -56,8 +49,7 @@ USER nextjs
 
 EXPOSE 3000
 
-ENV PORT 3000
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
 
-# server.js is created by next build from the standalone output
-# https://nextjs.org/docs/pages/api-reference/next-config-js/output
-CMD HOSTNAME="0.0.0.0" node server.js
+CMD ["node", "server.js"]

@@ -16,17 +16,26 @@ interface PageProps {
 }
 
 // 1. Генерация статических путей (SSG)
+// 1. Генерация статических параметров (Slug)
 export async function generateStaticParams() {
-  const payload = await getPayload({ config: configPromise })
-  const articles = await payload.find({
-    collection: 'news',
-    limit: 1000,
-    draft: false,
-  })
+  try {
+    const payload = await getPayload({ config: configPromise })
+    const articles = await payload.find({
+      collection: 'news',
+      limit: 1000,
+      draft: false,
+    })
 
-  return articles.docs.map((doc) => ({
-    slug: doc.slug,
-  }))
+    return articles.docs.map((doc) => ({
+      slug: doc.slug,
+    }))
+  } catch (error) {
+    // ВАЖНО: При сборке в Docker база данных недоступна.
+    // Возвращаем пустой массив [], чтобы Next.js не падал с ошибкой,
+    // а просто пропустил пре-генерацию страниц (они сгенерируются при первом заходе).
+    console.warn('[generateStaticParams] Database not available, skipping static generation.')
+    return []
+  }
 }
 
 // 2. SEO Метаданные (Title, Description)
@@ -35,21 +44,32 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   // FIX 3: Await params before using properties
   const { slug } = await params
 
-  const payload = await getPayload({ config: configPromise })
-  const { docs } = await payload.find({
-    collection: 'news',
-    where: {
-      slug: { equals: slug },
-    },
-  })
+  try {
+    const payload = await getPayload({ config: configPromise })
+    const { docs } = await payload.find({
+      collection: 'news',
+      where: {
+        slug: { equals: slug },
+      },
+    })
 
-  const post = docs[0]
+    const post = docs[0]
 
-  if (!post) return { title: '404 - Статья не найдена' }
+    if (!post) return { title: '404 - Статья не найдена' }
 
-  return {
-    title: `${post.title} | Звездный Журнал`,
-    description: `Читайте статью "${post.title}" в категории ${post.category}. Автор: ${post.author_name}`,
+    return {
+      title: `${post.title} | Звездный Журнал`,
+      description: `Читайте статью "${post.title}" в категории ${post.category}. Автор: ${post.author_name}`,
+    }
+  } catch (error) {
+    // ВАЖНО: Если база недоступна при сборке, возвращаем заглушку,
+    // чтобы билд прошел успешно.
+    console.warn(`[generateMetadata] Не удалось получить данные для "${slug}" (сборка Docker?)`)
+
+    return {
+      title: 'Звездный Журнал',
+      description: 'Новости космоса и астрономии',
+    }
   }
 }
 

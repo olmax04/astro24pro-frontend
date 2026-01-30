@@ -1,14 +1,11 @@
 import { getPayload } from 'payload'
 import configPromise from '@payload-config' // Ваш конфиг payload
-import { ArrowRight, Star } from 'lucide-react'
 import HeroSection from '@/components/sections/HeroSection'
-import { Banner } from '@/components/blocks/Banner'
-import bgImage from '/media/405a75238f0fd9cf309b642614fe4218.jpg'
 import { SpecialistsSection } from '@/components/sections/SpecialistsSection'
 import { BlogSection } from '@/components/sections/BlogSection'
 import { ReviewsSection } from '@/components/sections/ReviewSection'
+export const dynamic = 'force-dynamic'
 
-// Функция получения данных
 async function getPromotions() {
   const payload = await getPayload({ config: configPromise })
 
