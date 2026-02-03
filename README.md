@@ -1,4 +1,4 @@
-# Astro24Pro Frontend
+# Astro24Pro
 
 Full‑stack web app for astrological services and an esoteric shop. Built on Next.js + Payload CMS with a modern UI, rich content editing, and a scalable data model for specialists, products, news, and promotions.
 
