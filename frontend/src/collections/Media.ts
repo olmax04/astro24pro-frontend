@@ -3,7 +3,11 @@ import type { CollectionConfig } from 'payload'
 export const Media: CollectionConfig = {
   slug: 'media',
   access: {
+    // TODO: Обновить права доступа для ролей
     read: () => true,
+    create: () => true,
+    update: () => true,
+    delete: () => true,
   },
   upload: {
     staticDir: 'media',
