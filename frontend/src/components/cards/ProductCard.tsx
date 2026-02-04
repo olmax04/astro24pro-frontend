@@ -4,7 +4,7 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Star, ShoppingBag } from 'lucide-react'
-import { ProductData } from '../../types/product'
+import { ProductData } from '@/types/product'
 
 interface ProductCardProps {
   data: ProductData

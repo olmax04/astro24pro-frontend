@@ -1,10 +1,10 @@
 // app/specialists/page.tsx
 import React from 'react'
 import { getPayload } from 'payload'
-import configPromise from '../../../../payload.config'
-import { SpecialistsFilters } from '../../../../components/specialists/SpecialistsFilters'
-import { SpecialistsSort } from '../../../../components/specialists/SpecialistsSort' // Импорт сортировки
-import { SpecialistCard, SpecialistData } from '../../../../components/cards/SpecialistCard'
+import configPromise from '@/payload.config'
+import { SpecialistsFilters } from '@/components/specialists/SpecialistsFilters'
+import { SpecialistsSort } from '@/components/specialists/SpecialistsSort' // Импорт сортировки
+import { SpecialistCard, SpecialistData } from '@/components/cards/SpecialistCard'
 
 interface PageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>

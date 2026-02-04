@@ -1,9 +1,9 @@
 import { getPayload } from 'payload'
-import configPromise from '../../payload.config' // Ваш конфиг payload
-import HeroSection from '../../components/sections/HeroSection'
-import { SpecialistsSection } from '../../components/sections/SpecialistsSection'
-import { BlogSection } from '../../components/sections/BlogSection'
-import { ReviewsSection } from '../../components/sections/ReviewSection'
+import configPromise from '@/payload.config' // Ваш конфиг payload
+import HeroSection from '@/components/sections/HeroSection'
+import { SpecialistsSection } from '@/components/sections/SpecialistsSection'
+import { BlogSection } from '@/components/sections/BlogSection'
+import { ReviewsSection } from '@/components/sections/ReviewSection'
 export const dynamic = 'force-dynamic'
 
 async function getPromotions() {

@@ -2,11 +2,11 @@ import React from 'react'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getPayload } from 'payload'
-import configPromise from '../../../../../payload.config'
+import configPromise from '@/payload.config'
 import { ArrowLeft, Star, ShoppingBag, Truck, ShieldCheck } from 'lucide-react'
-import { ProductGallery } from '../../../../../components/shop/ProductGallery'
-import { ProductData } from '../../../../../types/product'
-import { RichText } from '../../../../../components/utils/RichText'
+import { ProductGallery } from '@/components/shop/ProductGallery'
+import { ProductData } from '@/types/product'
+import { RichText } from '@/components/utils/RichText'
 
 // Типизация параметров страницы
 interface ProductPageProps {

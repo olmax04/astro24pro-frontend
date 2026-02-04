@@ -1,12 +1,12 @@
 /* eslint-disable */
 import React from 'react'
 import { getPayload } from 'payload'
-import configPromise from '../../../../payload.config'
-import { ShopSidebar } from '../../../../components/shop/ShopSidebar'
-import { ProductCard } from '../../../../components/cards/ProductCard'
-import { ProductData } from '../../../../types/product'
-import { PRODUCT_STATUS } from '@/payload/constants'
-import { ShopSort } from '../../../../components/shop/ShopSort' // Убедитесь, что путь верен
+import configPromise from '@/payload.config'
+import { ShopSidebar } from '@/components/shop/ShopSidebar'
+import { ProductCard } from '@/components/cards/ProductCard'
+import { ProductData } from '@/types/product'
+import { PRODUCT_STATUS } from '@/constants'
+import { ShopSort } from '@/components/shop/ShopSort' // Убедитесь, что путь верен
 
 // Тип для пропсов страницы
 interface PageProps {

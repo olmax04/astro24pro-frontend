@@ -3,9 +3,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
-import configPromise from '../../../../../payload.config'
+import configPromise from '@/payload.config'
 import { ArrowLeft, Calendar, User, Share2 } from 'lucide-react'
-import { RichText } from '../../../../../components/utils/RichText'
+import { RichText } from '@/components/utils/RichText'
 import { Metadata } from 'next'
 
 // FIX 1: Update type definition for Next.js 15

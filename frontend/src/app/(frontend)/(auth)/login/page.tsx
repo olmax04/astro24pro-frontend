@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 // import { useRouter } from 'next/navigation' // <-- Роутер больше не нужен здесь, он внутри провайдера
 import { Mail, Lock, Eye, EyeOff, Loader2 } from 'lucide-react'
-import { useAuth } from '../../../../components/providers/AuthProvider' // <--- 1. ИМПОРТИРУЕМ ХУК
+import { useAuth } from '@/components/providers/AuthProvider' // <--- 1. ИМПОРТИРУЕМ ХУК
 
 export default function LoginPage() {
   // const router = useRouter() <--- Убираем

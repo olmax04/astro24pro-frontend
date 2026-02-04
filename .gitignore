@@ -37,7 +37,6 @@ backend/target/
 backend/build/
 backend/.mvn/wrapper/maven-wrapper.jar
 backend/HELP.md
-backend/src/main/resources/application.properties
 
 backend/.apt_generated
 backend/.classpath

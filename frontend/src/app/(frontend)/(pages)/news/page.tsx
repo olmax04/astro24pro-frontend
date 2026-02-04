@@ -1,8 +1,8 @@
 import React from 'react'
 import { getPayload } from 'payload'
-import configPromise from '../../../../payload.config' // Проверь путь к конфигу
-import { BlogFeed } from '../../../../components/BlogFeed' // Путь к компоненту выше
-import { BlogPost } from '../../../../components/cards/BlogCard'
+import configPromise from '@/payload.config' // Проверь путь к конфигу
+import { BlogFeed } from '@/components/BlogFeed' // Путь к компоненту выше
+import { BlogPost } from '@/components/cards/BlogCard'
 
 export const dynamic = 'force-dynamic' // Чтобы новости обновлялись сразу (или используй revalidate)
 

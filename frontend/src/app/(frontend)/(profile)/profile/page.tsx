@@ -1,9 +1,9 @@
 import React from 'react'
 import { redirect } from 'next/navigation'
 import { getPayload } from 'payload'
-import configPromise from '../../../../payload.config'
+import configPromise from '@/payload.config'
 import { headers } from 'next/headers'
-import { ProfileTabs } from '../../../../components/profile/ProfileTabs'
+import { ProfileTabs } from '@/components/profile/ProfileTabs'
 
 export const dynamic = 'force-dynamic'
 

@@ -7,7 +7,7 @@ import { Briefcase, Save, Loader2, DollarSign } from 'lucide-react'
 
 // <--- 2. Динамический импорт редактора (отключает SSR)
 const LexicalEditor = dynamic(
-  () => import('../../../ui/LexicalEditor').then((mod) => mod.LexicalEditor),
+  () => import('@/components/ui/LexicalEditor').then((mod) => mod.LexicalEditor),
   {
     ssr: false, // Главный фикс: не рендерить на сервере
     loading: () => (

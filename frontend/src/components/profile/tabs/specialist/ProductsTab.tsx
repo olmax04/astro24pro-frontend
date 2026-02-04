@@ -6,8 +6,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Plus, Edit, Trash2, Package, AlertCircle, Loader2 } from 'lucide-react'
 import { toast } from 'sonner' // Опционально: для красивых уведомлений
-import { AddProductDialog } from '../../../dialog/AddProductDialog'
-import { EditProductDialog } from '../../../dialog/EditProductDialog'
+import { AddProductDialog } from '@/components/dialog/AddProductDialog'
+import { EditProductDialog } from '@/components/dialog/EditProductDialog'
 
 // --- Типы (желательно вынести в @/types/payload-types) ---
 interface ProductImage {
