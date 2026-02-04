@@ -1,9 +1,16 @@
 import type { CollectionConfig } from 'payload'
-
+import { ROLES } from '@/constants'
 export const Media: CollectionConfig = {
   slug: 'media',
   access: {
+    // TODO: Обновить права доступа для ролей
     read: () => true,
+    // @ts-ignore
+    create: () => ({ req: { user } }) =>
+      Boolean(user && (user.role === ROLES.SPECIALIST || user.role === ROLES.MODERATOR || user.role === ROLES.MODERATOR)),
+    update: () => true,
+    delete: ({ req: { user } }) =>
+      Boolean(user && user.role === ROLES.MODERATOR)
   },
   upload: {
     staticDir: 'media',
