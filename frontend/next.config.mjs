@@ -6,6 +6,16 @@ const nextConfig = {
   experimental: {
     globalNotFound: true,
   },
+  async rewrites() {
+    return [
+      {
+        // Все запросы, начинающиеся с /api/v1, уходят на бэкенд
+        source: '/api/v1/:path*',
+        // Внутри Docker используем имя сервиса из docker-compose
+        destination: 'http://astro-backend:8080/api/v1/:path*',
+      },
+    ]
+  },
   images: {
     remotePatterns: [
       {

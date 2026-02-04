@@ -2,7 +2,7 @@ services:
 
   postgres:
     image: 'postgres:16-alpine'
-    container_name: astro_postgres
+    container_name: astro-postgres
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -22,7 +22,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: astro_backend
+    container_name: astro-backend
     ports:
       - "8080:8080"
     environment:
@@ -39,7 +39,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: astro_frontend
+    container_name: astro-frontend
     ports:
       - '3000:3000'
     volumes:

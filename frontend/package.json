@@ -49,7 +49,10 @@
     "react-dom": "19.2.1",
     "sharp": "0.34.2",
     "tailwind-merge": "^3.4.0",
-    "tailwindcss": "^4.1.18"
+    "tailwindcss": "^4.1.18",
+    "@livekit/components-react": "latest",
+    "@livekit/components-styles": "latest",
+    "livekit-client": "latest"
   },
   "devDependencies": {
     "@playwright/test": "1.56.1",

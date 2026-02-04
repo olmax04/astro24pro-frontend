@@ -5,7 +5,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ApiPaths {
 
-    public static final String VIDEO_ENDPOINT = "/video";
+    public static final String API = "/api/v1";
+
+    public static final String VIDEO_ENDPOINT = API + "/video";
 
 
 }
