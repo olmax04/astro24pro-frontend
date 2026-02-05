@@ -60,22 +60,22 @@ export const Users: CollectionConfig = {
           name: 'specialization',
           label: 'Специализация (Астролог, Таролог)',
           type: 'text',
-          required: true,
+          required: false,
         },
-        { name: 'experience', label: 'Опыт работы (лет)', type: 'number', required: true },
+        { name: 'experience', label: 'Опыт работы (лет)', type: 'number', required: false },
         {
           name: 'biography',
           label: 'Биография',
           type: 'richText',
           editor: lexicalEditor({}),
-          required: true,
+          required: false,
         },
         {
           name: 'serviceCost',
           label: 'Базовая стоимость услуги',
           type: 'group',
           fields: [
-            { name: 'amount', type: 'number', required: true },
+            { name: 'amount', type: 'number', required: false },
             {
               name: 'currency',
               type: 'select',
